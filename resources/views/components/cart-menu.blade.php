@@ -37,32 +37,34 @@
     </div>
     <!--/ End Shopping Item -->
     @push('scripts')
-        <script>
-            // Using an immediately-invoked function expression to avoid global scope pollution
-            (function ($) {
-                // Event handler for the change event on elements with the class 'item-quantity'
 
-                $('.remove-item').on('click', function (e) {
-                    const itemId = $(this).data('id');
+{{--        <script>--}}
+{{--            // Using an immediately-invoked function expression to avoid global scope pollution--}}
+{{--            (function ($) {--}}
+{{--                // Event handler for the change event on elements with the class 'item-quantity'--}}
 
-                    // AJAX request to delete the item from the cart
-                    $.ajax({
-                        url: `/cart/${itemId}`, // Using template literals for string interpolation
-                        method: 'delete',
-                        data: {
-                            _token: csrf_token
-                        },
-                        success: (response) => {
-                            // Removing the item from the DOM on successful deletion
-                            $(`#${itemId}`).remove();
-                            location.reload();
-                        },
-                        error: (error) => {
-                            console.error("Error deleting item:", error);
-                        }
-                    });
-                });
-            })(jQuery);
-        </script>
+{{--                $('.remove-item').on('click', function (e) {--}}
+{{--                    const itemId = $(this).data('id');--}}
+
+{{--                    // AJAX request to delete the item from the cart--}}
+{{--                    $.ajax({--}}
+{{--                        url: `/cart/${itemId}`, // Using template literals for string interpolation--}}
+{{--                        method: 'delete',--}}
+{{--                        data: {--}}
+{{--                            _token: csrf_token--}}
+{{--                        },--}}
+{{--                        success: (response) => {--}}
+{{--                            // Removing the item from the DOM on successful deletion--}}
+{{--                            $(`#${itemId}`).remove();--}}
+{{--                            location.reload();--}}
+{{--                        },--}}
+{{--                        error: (error) => {--}}
+{{--                            console.error("Error deleting item:", error);--}}
+{{--                        }--}}
+{{--                    });--}}
+{{--                });--}}
+{{--            })(jQuery);--}}
+{{--        </script>--}}
     @endpush
+    @vite('resources/js/cart.js')
 </div>
