@@ -57,7 +57,7 @@ class CartController extends Controller
         ]);
 //        $product=Product::findorFail($request->post('product_id'));
         //$repository=new CartModelRepository();
-        $this->cart->update($id,$request->post('quantity'));
+        return $this->cart->update($id,$request->post('quantity'));
     }
 
     /**
