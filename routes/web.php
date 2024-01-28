@@ -21,7 +21,11 @@ Route::get('/products/{product:slug}',[\App\Http\Controllers\Front\ProductsContr
 // we use :slug to tell larvel we use slug nested of id
 Route::resource('cart', CartController::class);
 
+/** {Route for checkout} **/
 
+Route::get('checkout',[\App\Http\Controllers\Front\CheckoutController::class,'create'])->name('checkout');
+Route::post('checkout',[\App\Http\Controllers\Front\CheckoutController::class,'store'])->name('checkout.store');
+/**{End of checkout}**/
 Route::get('/dash', function () {
     return view('dashboard');
 });

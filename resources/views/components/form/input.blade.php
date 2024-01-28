@@ -1,7 +1,7 @@
 @props([
         'type'=>'text',  // this mean we give a defult value to type . we don't need to use {this ?? 'text'} '
         'name',
-        'value',
+        'value'=>'',
         'label'=>false,
         'accept'=>' '
 ])
