@@ -29,7 +29,7 @@ class Order extends Model
     public function products(){
         return $this->belongsToMany(Product::class,'order_items','order_id','product_id','id','id')
             ->using(OrderItem::class) // to tell laravel that povit table has model
-            ->withPivot(['prodcut_name','price','options']); // get data from table to store in povit table
+            ->withPivot(['product_name','price','quantity','options']); // get data from table to store in povit table when we use the relation
     }
     public function addresses(){
         return  $this->hasMany(OrderAddress::class); // has 2 billing and shipping
