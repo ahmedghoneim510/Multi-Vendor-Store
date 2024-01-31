@@ -39,5 +39,5 @@ $('.remove-item').on('click', function (e) {
             console.error("Error deleting item:", error);
         }
     });
-});
+
 })(jQuery);

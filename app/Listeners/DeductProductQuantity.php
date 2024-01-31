@@ -28,12 +28,16 @@ class DeductProductQuantity
     public function handle($event): void // we can contact the event with listener from eventServiceProvider
     { // incase we use this listener in multi events we may not spacified the event type
         $order=$event->order; // we get it from event
-        foreach ($order->products as $product){
-           // dd($order->products);
-            $product->decrement('quantity',$product->pivot->quantity);
+        try{
+            foreach ($order->products as $product){
+                // dd($order->products);
+                $product->decrement('quantity',$product->pivot->quantity);
 //            Product::where('id',$item->product_id)->update([
 //                'quantity'=>DB::row("qantity - {$item->quantity}"),
 //            ]);
+            }
+        }catch (\Throwable $e){
+
         }
     }
 }

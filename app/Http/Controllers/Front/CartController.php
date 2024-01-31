@@ -42,6 +42,13 @@ class CartController extends Controller
         //$repository=new CartModelRepository();
 //        $this->cart->add();
         $this->cart->add($product,$request->post('quantity'));
+
+        if ($request->expectsJson()) {
+
+            return response()->json([
+                'message' => 'Item added to cart!',
+            ], 201);
+        }
         return to_route('cart.index')
             ->with('success','product added to cart!');
     }
@@ -67,5 +74,8 @@ class CartController extends Controller
     {
       //  $repository=new CartModelRepository();
         $this->cart->delete($id);
+        return [
+            'message' => 'Item deleted!',
+        ];
     }
 }
