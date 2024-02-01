@@ -32,7 +32,7 @@ class OrderCreatedNotification extends Notification
     {
         //$notifiable is object from the current user (use like mail and not like sms we decide what channel based on it)
         // mail ,database,broadcast
-        return ['database','broadcast'];
+        return ['database'];
         /* we 'll use it later
         $channels=['database']; // default database
         if($notifiable->notification_preference['order_created']['sms'] ??false){

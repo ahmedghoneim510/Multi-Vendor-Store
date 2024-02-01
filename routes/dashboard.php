@@ -5,10 +5,10 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\ProfileController;
-Route::group([
-    'middleware'=>['auth','auth.type:super-admin,admin'], // must be auth , we made a middleware to enter dash :mean we 'll pass parameter
+Route::group([ // we want to make this route to login with guard admin so we use auth:admin
+    'middleware'=>['auth:admin'], // must be auth , we made a middleware to enter dash :mean we 'll pass parameter
     'as'=>'dashboard.', // to make route name like dashboard.categories.index
-    'prefix'=>'dashboard', // make a prefix before each resource
+    'prefix'=>'admin/dashboard', // make a prefix before each resource (link)
 ],function (){
     Route::get('/profile',[ProfileController::class,'edit'])->name('profile.edit');
     Route::patch('/profile',[ProfileController::class,'update'])->name('profile.update');

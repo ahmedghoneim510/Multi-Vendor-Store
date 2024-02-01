@@ -1,11 +1,12 @@
 {{--use name of class FrontLayout but we use here cbab case front-layout ,
 any thing but inside it it's go to putting in solt in layout --}}
-<x-front-layout>
+<x-front-layout title="Home">
 {{--  use slot with name and use it with it's name  --}}
 {{--    <x-slot name="breadcrumb" >   we can use alies --}}
 
     <!-- Start Hero Area -->
     <section class="hero-area">
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-12 custom-padding-right">

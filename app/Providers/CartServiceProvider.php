@@ -15,6 +15,7 @@ class CartServiceProvider extends ServiceProvider
         $this->app->bind(CartRepository::class,function(){ // we store object under name of class of interface
             return new CartModelRepository();
         });
+        //we can use app->singleton to return same object
     }
 
     /**
