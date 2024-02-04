@@ -17,8 +17,18 @@ class Product extends Model
       'name','slug','image','description','category_id','store_id','price','compare_price','status',
         'feature','rating','options'
     ];
+    protected $hidden=[ // used to hidden some cols when we use api (return data without this columns)
+        'created_at','update_at','deleted_at','image'
+    ];
+    protected $appends = [ // append it like col to use in api
+        'image_url', // should make accessor function
+    ];
+
     protected static function booted()
     {
+        static::creating(function(Product $product){ // while creating(inserting) make uuid and insert it
+            $product->slug=Str::slug($product->name);
+        });
         static::addGlobalScope('store',new StoreScope());
     }
     public function category(){
@@ -37,14 +47,14 @@ class Product extends Model
             //'id',  => pk current model
             //'id');  => pk for related model
     }
-    public function scopeFilter(Builder $builder ,$filters){ // local scope
-        if($filters['name'] ?? false){
-            $builder->where('name','like',"%{$filters['name']}%");
-        }
-        if($filters['status']?? false){
-            $builder->where('status',$filters['status']);
-        }
-    }
+//    public function scopeFilter(Builder $builder ,$filters){ // local scope
+//        if($filters['name'] ?? false){
+//            $builder->where('name','like',"%{$filters['name']}%");
+//        }
+//        if($filters['status']?? false){
+//            $builder->where('status',$filters['status']);
+//        }
+//    }
     public function ScopeActive(Builder $builder){
         $builder->where('status','active');
     }
@@ -63,5 +73,32 @@ class Product extends Model
     public function getSalePrecentAttribute(){
         $discount=100-($this->price*100/$this->compare_price);
             return number_format($discount,1) ;
+    }
+    public function scopeFilter(Builder $builder ,$filters){
+        $options=array_merge([
+            'store_id'=>null,
+            'category_id'=>null,
+            'tag_id'=>null,
+            'status'=>'active',
+        ],$filters);
+        $builder->when($options['status'],function ($builder,$value){
+            $builder->where('status',$value);
+        });
+        $builder->when($options['store_id'],function ($builder,$value){
+            $builder->where('store_id',$value);
+        });
+        $builder->when($options['category_id'],function ($builder,$value){
+            $builder->where('category_id',$value);
+        });
+        $builder->when($options['tag_id'],function ($builder,$value){ // exists = id in ()
+//            $builder->whereRow('EXISTS (select 1 from product_tag where tag_id ? AND product_id=products.id )'); // mean we 'll a query statment
+            $builder->whereExists(function($query) use ($value) {
+                $query->select(1)
+                    ->from('product_tag')
+                    ->whereRaw('product_id = products.id')
+                    ->where('tag_id', $value);
+            });
+        });
+
     }
 }

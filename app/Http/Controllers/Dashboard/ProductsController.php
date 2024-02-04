@@ -95,8 +95,21 @@ class ProductsController extends Controller
             'status'=>['required'],
         ]);
 
+        $old_image=$product->image; // get old-image name so i could delete it
+        $data=$request->except('image'); // get all data except image so can i add key image and insert it in table simplly
+        // use function upload_image here
+        $new_image=$this->upload_image($request);
+        if($new_image){
+            $data['image']=$new_image;
+        }
+
+
+
+
+
+
+
         $product->update($request->except('tags'));
-        ;
 
         // tags come like this cotton,stripted,egyption
         $tags=json_decode($request->post('tags'));
@@ -119,6 +132,17 @@ class ProductsController extends Controller
         }
         //dd($tag_ids);
         $product->tags()->sync($tag_ids); // save all new ids and delete old
+        $old_image=$product->image; // get old-image name so i could delete it
+        $data=$request->except('image'); // get all data except image so can i add key image and insert it in table simplly
+        // use function upload_image here
+        $new_image=$this->upload_image($request);
+        if($new_image){
+            $data['image']=$new_image;
+        }
+        if($old_image && $new_image){
+            Storage::disk('public')->delete($old_image);
+        }
+        $product->update($data);
         return to_route('dashboard.products.index')->with('success','Product Updated');
     }
 
@@ -131,6 +155,7 @@ class ProductsController extends Controller
         $path=$file->store('uploads',[
             'disk'=>'public'
         ]);
+
         return $path;
     }
 

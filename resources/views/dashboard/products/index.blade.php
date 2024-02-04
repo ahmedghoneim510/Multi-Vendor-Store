@@ -33,6 +33,7 @@
                 <th>Name</th>
                 <th>Category</th>
                 <th>Store</th>
+                <th>price</th>
                 <th>status</th>
                 <th>Created At</th>
                 <th></th>
@@ -53,6 +54,7 @@
                     {{-- so inseted of that we can make a better way in controller --}}
                     <td>{{$product->category->name}}</td>  {{-- we use category (relation name) then get the name --}}
                     <td>{{$product->store->name}}</td>
+                    <td>{{$product->price}}</td>
                     <td>{{$product->status}}</td>
                     <td>{{$product->created_at}}</td>
                     <td>
@@ -68,7 +70,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="9"> No Products Found</td>
+                    <td colspan="10"> No Products Found</td>
                 </tr>
             @endforelse
         </tbody>
