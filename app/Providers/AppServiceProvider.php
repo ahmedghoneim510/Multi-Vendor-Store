@@ -14,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind('currency.converter',function (){
+            return new \App\Services\CurrencyConverter(config('services.CURRENCY_CONVERTER'));
+        });
     }
 
     /**

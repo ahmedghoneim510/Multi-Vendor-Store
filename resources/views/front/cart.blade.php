@@ -107,7 +107,7 @@
                             <div class="col-lg-4 col-md-6 col-12">
                                 <div class="right">
                                     <ul>
-                                        <li>Cart Subtotal<span>{{Currency::formatCurrency( $cart->total())}}</span></li>
+                                        <li>Cart Subtotal<span>{{\App\Helpers\Currency::formatCurrency( $cart->total())}}</span></li>
                                         <li>Shipping<span>Free</span></li>
                                         <li>You Save<span>$29.00</span></li>
                                         <li class="last">You Pay<span>$2531.00</span></li>

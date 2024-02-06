@@ -51,14 +51,15 @@
                             <ul class="menu-top-link">
                                 <li>
                                     <div class="select-position">
-                                        <select id="select4">
-                                            <option value="0" selected>$ USD</option>
-                                            <option value="1">€ EURO</option>
-                                            <option value="2">$ CAD</option>
-                                            <option value="3">₹ INR</option>
-                                            <option value="4">¥ CNY</option>
-                                            <option value="5">৳ BDT</option>
-                                        </select>
+                                        <form action="{{ route('currency.store') }}" method="post">
+                                            @csrf
+                                            <select name="currency_code" onchange="this.form.submit()">
+                                                <option value="USD" @selected('USD' == session('currency_code'))>$ USD</option>
+                                                <option value="EUR" @selected('EUR' == session('currency_code'))>€ EURO</option>
+                                                <option value="SAR" @selected('SAR' == session('currency_code'))>¥ SAR</option>
+                                                <option value="QAR" @selected('QAR' == session('currency_code'))>৳ QAR</option>
+                                            </select>
+                                        </form>
                                     </div>
                                 </li>
                                 <li>
@@ -69,8 +70,6 @@
                                             <option value="2">Filipino</option>
                                             <option value="3">Français</option>
                                             <option value="4">العربية</option>
-                                            <option value="5">हिन्दी</option>
-                                            <option value="6">বাংলা</option>
                                         </select>
                                     </div>
                                 </li>
@@ -128,14 +127,15 @@
                         <ul class="menu-top-link">
                             <li>
                                 <div class="select-position">
-                                    <select id="select4">
-                                        <option value="0" selected>$ USD</option>
-                                        <option value="1">€ EURO</option>
-                                        <option value="2">$ CAD</option>
-                                        <option value="3">₹ INR</option>
-                                        <option value="4">¥ CNY</option>
-                                        <option value="5">৳ BDT</option>
-                                    </select>
+                                    <form action="{{ route('currency.store') }}" method="post">
+                                        @csrf
+                                        <select name="currency_code" onchange="this.form.submit()">
+                                            <option value="USD" @selected('USD' == session('currency_code'))>$ USD</option>
+                                            <option value="EUR" @selected('EUR' == session('currency_code'))>€ EURO</option>
+                                            <option value="SAR" @selected('SAR' == session('currency_code'))>¥ SAR</option>
+                                            <option value="QAR" @selected('QAR' == session('currency_code'))>৳ QAR</option>
+                                        </select>
+                                    </form>
                                 </div>
                             </li>
                             <li>

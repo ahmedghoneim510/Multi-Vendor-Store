@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\Image;
 
 class ProductsController extends Controller
 {
@@ -103,48 +104,47 @@ class ProductsController extends Controller
             $data['image']=$new_image;
         }
 
-
-
-
-
-
-
         $product->update($request->except('tags'));
 
         // tags come like this cotton,stripted,egyption
         $tags=json_decode($request->post('tags'));
-        //dd($tags);
-        $tag_ids=[];
-        $saved_tag=Tag::all(); // get all data from tag rather than every loop i get it
-        foreach ($tags as $item){
-            $slug=Str::slug($item->value);
-//            $tag=Tag::where('slug',$slug)->first();
-            $tag=$saved_tag->where('slug',$slug)->first();
-            if(!$tag){
-                $tag=Tag::create([
-                    'name'=>$item->value,
-                    'slug'=>$slug
-                ]);
+        if(isset($tags)){
+            $tag_ids=[];
+            $saved_tag=Tag::all(); // get all data from tag rather than every loop i get it
+            foreach ($tags as $item){
+                $slug=Str::slug($item->value);
+                $tag=$saved_tag->where('slug',$slug)->first();
+                if(!$tag){
+                    $tag=Tag::create([
+                        'name'=>$item->value,
+                        'slug'=>$slug
+                    ]);
 
+                }
+
+                $tag_ids[]=$tag->id;
             }
+            $product->tags()->sync($tag_ids); // save all new ids and delete old
+        }
 
-            $tag_ids[]=$tag->id;
-        }
-        //dd($tag_ids);
-        $product->tags()->sync($tag_ids); // save all new ids and delete old
-        $old_image=$product->image; // get old-image name so i could delete it
-        $data=$request->except('image'); // get all data except image so can i add key image and insert it in table simplly
+
+
+       // $old_image=$product->image; // get old-image name so i could delete it
+        //$data=$request->except('image'); // get all data except image so can i add key image and insert it in table simplly
         // use function upload_image here
-        $new_image=$this->upload_image($request);
-        if($new_image){
-            $data['image']=$new_image;
-        }
+        //$new_image=$this->upload_image($request);
+//        if($new_image){
+//            $data['image']=$new_image;
+//        }
         if($old_image && $new_image){
             Storage::disk('public')->delete($old_image);
         }
         $product->update($data);
         return to_route('dashboard.products.index')->with('success','Product Updated');
     }
+
+
+
 
     public function upload_image(Request $request)
     {

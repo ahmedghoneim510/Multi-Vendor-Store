@@ -17,7 +17,7 @@ class CartServiceProvider extends ServiceProvider
         });
         //we can use app->singleton to return same object
     }
-
+    
     /**
      * Bootstrap services.
      */

@@ -20,7 +20,7 @@
 
                 <div class="content">
                     <h4><a href="{{route('products.show',$item->product->slug)}}">{{$item->product->name}}</a></h4>
-                    <p class="quantity">{{$item->quantity}}x - <span class="amount">{{Currency::formatCurrency( $item->product->price * $item->quantity)}}</span></p>
+                    <p class="quantity">{{$item->quantity}}x - <span class="amount">{{\App\Helpers\Currency::formatCurrency( $item->product->price * $item->quantity)}}</span></p>
                 </div>
             </li>
             @endforeach
@@ -28,7 +28,7 @@
         <div class="bottom">
             <div class="total">
                 <span>Total</span>
-                <span class="total-amount">{{Currency::formatCurrency( $total)}}</span>
+                <span class="total-amount">{{\App\Helpers\Currency::formatCurrency( $total)}}</span>
             </div>
             <div class="button">
                 <a href="checkout.html" class="btn animate">Checkout</a>
