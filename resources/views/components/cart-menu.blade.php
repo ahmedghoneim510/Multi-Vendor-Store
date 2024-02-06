@@ -31,7 +31,7 @@
                 <span class="total-amount">{{\App\Helpers\Currency::formatCurrency( $total)}}</span>
             </div>
             <div class="button">
-                <a href="checkout.html" class="btn animate">Checkout</a>
+                <a href="{{route('checkout')}}" class="btn animate">Checkout</a>
             </div>
         </div>
     </div>

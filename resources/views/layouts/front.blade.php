@@ -43,83 +43,7 @@
 <header class="header navbar-area">
     <!-- Start Topbar -->
     <div class="topbar">
-        @if(request()->is('/'))
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-4 col-md-4 col-12">
-                        <div class="top-left">
-                            <ul class="menu-top-link">
-                                <li>
-                                    <div class="select-position">
-                                        <form action="{{ route('currency.store') }}" method="post">
-                                            @csrf
-                                            <select name="currency_code" onchange="this.form.submit()">
-                                                <option value="USD" @selected('USD' == session('currency_code'))>$ USD</option>
-                                                <option value="EUR" @selected('EUR' == session('currency_code'))>€ EURO</option>
-                                                <option value="SAR" @selected('SAR' == session('currency_code'))>¥ SAR</option>
-                                                <option value="QAR" @selected('QAR' == session('currency_code'))>৳ QAR</option>
-                                            </select>
-                                        </form>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="select-position">
-                                        <select id="select5">
-                                            <option value="0" selected>English</option>
-                                            <option value="1">Español</option>
-                                            <option value="2">Filipino</option>
-                                            <option value="3">Français</option>
-                                            <option value="4">العربية</option>
-                                        </select>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-12">
-                        <div class="top-middle">
-                            <ul class="useful-links">
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="about-us.html">About Us</a></li>
-                                <li><a href="contact.html">Contact Us</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-12">
-                        <div class="top-end">
-                            @auth()
-                                <div class="user">
-                                    <i class="lni lni-user"></i>
-                                    {{\Illuminate\Support\Facades\Auth::user()->name}}
-                                </div>
-                                <ul class="user-login">
-                                    <li>
-                                        <a href="{{route('logout')}}" onclick="event.preventDefault();document.getElementById('logout').submit()">Sign out</a>
-                                    </li>
-                                    <form action="{{route('logout')}}" id="logout" method="post" style="display: none">
-                                        @csrf
-                                    </form>
-
-                                </ul>
-                            @else
-                                <div class="user">
-                                    <i class="lni lni-user"></i>
-                                    Hello
-                                </div>
-                                <ul class="user-login">
-                                    <li>
-                                        <a href="{{route('login')}}">Sign In</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{route('register')}}">Register</a>
-                                    </li>
-                                </ul>
-                            @endauth
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
+        <div class="container"></div>
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-4 col-md-4 col-12">
@@ -139,27 +63,24 @@
                                 </div>
                             </li>
                             <li>
-                                <div class="select-position">
-                                    <select id="select5">
-                                        <option value="0" selected>English</option>
-                                        <option value="1">Español</option>
-                                        <option value="2">Filipino</option>
-                                        <option value="3">Français</option>
-                                        <option value="4">العربية</option>
-                                        <option value="5">हिन्दी</option>
-                                        <option value="6">বাংলা</option>
-                                    </select>
-                                </div>
-                            </li>
+                                <ul>
+                                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                        <li>
+                                            <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                                {{ $properties['native'] }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-12">
                     <div class="top-middle">
                         <ul class="useful-links">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="about-us.html">About Us</a></li>
-                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="index.html">{{trans('Home')}}</a></li>
+                            <li><a href="about-us.html">@lang('About Us')</a></li>
+                            <li><a href="contact.html">{{__('Contact Us')}}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -172,7 +93,7 @@
                             </div>
                             <ul class="user-login">
                                 <li>
-                                    <a href="{{route('logout')}}" onclick="event.preventDefault();document.getElementById('logout').submit()">Sign out</a>
+                                    <a href="{{route('logout')}}" onclick="event.preventDefault();document.getElementById('logout').submit()">{{__('Sign Out')}}</a>
                                 </li>
                                 <form action="{{route('logout')}}" id="logout" method="post" style="display: none">
                                     @csrf
@@ -182,14 +103,14 @@
                         @else
                         <div class="user">
                             <i class="lni lni-user"></i>
-                            Hello
+                            {{__('Hello')}}
                         </div>
                         <ul class="user-login">
                             <li>
-                                <a href="{{route('login')}}">Sign In</a>
+                                <a href="{{route('login')}}">{{__('Sign In')}}</a>
                             </li>
                             <li>
-                                <a href="{{route('register')}}">Register</a>
+                                <a href="{{route('register')}}">{{__('Register')}}</a>
                             </li>
                         </ul>
                         @endauth

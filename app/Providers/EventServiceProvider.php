@@ -29,7 +29,7 @@ class EventServiceProvider extends ServiceProvider
         OrderCreated::class=>[   // create event and use it here
             DeductProductQuantity::class,
             SendOrderCreatedNotification::class,
-            //EmpeytCart::class,
+            EmpeytCart::class,
         ],
     ];
 

@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Pagination\PaginationState;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,9 +26,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+
         Validator::extend('filter',function ($attribute,$value,$param){
             return ! in_array(strtolower($value),$param);
         },"This value is not allowed..!");
         Paginator::useBootstrapFour();
+
     }
 }
