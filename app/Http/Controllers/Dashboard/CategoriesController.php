@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use mysql_xdevapi\Exception;
@@ -20,6 +21,10 @@ class CategoriesController extends Controller
      */
     public function index()
     {
+        if(Gate::denies('categories.view')) //check if user has permission to view categories
+        {
+            abort(403); // we also can use gate::allows
+        }
         $request=request();
         //$request->input(); // get data from url  , ->query('name') get name from url
 //        $query=Category::query();
@@ -54,7 +59,10 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-
+        if(!Gate::allows('categories.create')) //check if user has permission to view categories
+        {
+            abort(403); // we also can use gate::allows
+        }
         $parents=Category::all();
         $category=new Category();
        return view('dashboard.categories.create',compact('category','parents'));
@@ -65,6 +73,7 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('categories.create'); //check if user has permission to create  categories
         // validation
         $request->validate(Category::rules(),[
             'required'=>'This field (:attribute) is required !',
@@ -91,6 +100,7 @@ class CategoriesController extends Controller
      */
     public function show(Category $category)
     {
+        Gate::authorize('categories.view'); //check if user has permission to view categories
         return view('dashboard.categories.show',compact('category'));
     }
 
@@ -99,6 +109,8 @@ class CategoriesController extends Controller
      */
     public function edit(string $id)
     {
+        Gate::authorize('categories.update'); //check if user has permission to update categories
+
 //        $parents=Category::where('id','<>',$id)
 //            ->whereNotNull('parent_id')
 //            ->orwhere('parent_id','<>',$id)
@@ -122,6 +134,7 @@ class CategoriesController extends Controller
      */
     public function update(CategoryRequest $request,  $id) // use commend to create it make:request + name
     {
+        Gate::authorize('categories.update'); //check if user has permission to update categories
         //dd($id);
         // validation
         //$request->validate(Category::rules($id));
@@ -150,6 +163,7 @@ class CategoriesController extends Controller
      */
     public function destroy(string $id)
     {
+        Gate::authorize('categories.delete'); //check if user has permission to delete categories
         $category=Category::findOrFail($id);
         $category->delete();
 

@@ -5,8 +5,11 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\ProfileController;
+use App\Http\Controllers\Dashboard\RolesController;
+use App\Http\Controllers\Dashboard\AdminsController;
+use App\Http\Controllers\Dashboard\UsersController;
 Route::group([ // we want to make this route to login with guard admin so we use auth:admin
-    'middleware'=>['auth:admin'], // must be auth , we made a middleware to enter dash :mean we 'll pass parameter
+    'middleware'=>['auth:admin,web'], // must be auth , we made a middleware to enter dash :mean we 'll pass parameter
     'as'=>'dashboard.', // to make route name like dashboard.categories.index
     'prefix'=>'admin/dashboard', // make a prefix before each resource (link)
 ],function (){
@@ -30,5 +33,9 @@ Route::group([ // we want to make this route to login with guard admin so we use
     //
     Route::resource('/categories',CategoriesController::class);
     Route::resource('/products',ProductsController::class);
+    Route::resource('roles',RolesController::class);
+    Route::resource('/admins',AdminsController::class);
+    Route::resource('/users',UsersController::class);
 
-    });
+
+});

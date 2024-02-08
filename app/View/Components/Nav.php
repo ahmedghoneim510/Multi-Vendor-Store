@@ -5,6 +5,7 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
 class Nav extends Component
@@ -18,7 +19,8 @@ class Nav extends Component
     public function __construct()
     {
 
-        $this->items=config('nav');
+        $this->items=$this->prepareItem(config('nav'));
+
         $this->active=\Illuminate\Support\Facades\Route::currentRouteName();
     }
 
@@ -28,5 +30,17 @@ class Nav extends Component
     public function render(): View|Closure|string
     {
         return view('components.nav');
+    }
+    public function prepareItem($items){
+
+        $user=Auth::user();
+        foreach ($items as $key =>$item){
+            //dd($item);
+            if(isset($item['ability']) && !$user->can($item['ability'])){
+                unset($items[$key]);
+            }
+        }
+        return $items;
+
     }
 }

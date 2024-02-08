@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Image;
@@ -18,6 +19,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny',Product::class); // check if user has permission to view categories
         $request=request();
         //$user=Auth::user();    we use global scope nested of this
         //        if($user->store_id){
@@ -43,6 +45,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
+        $this->authorize('create',Product::class);
         $product=new Product();
         return view('dashboard.products.create',compact('product'));
     }
@@ -52,6 +55,7 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create',Product::class);
         $request->validate([
             'name'=>['required','string','max:255'],
             'status'=>['required','in:active,archived,draft'],
@@ -70,9 +74,10 @@ class ProductsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        //
+        $this->authorize('view',$product);
+//        return view('dashboard.products.show',compact('product'));
     }
 
     /**
@@ -81,8 +86,8 @@ class ProductsController extends Controller
     public function edit( $id)
     {
         $product=Product::findorFail($id);
+        $this->authorize('update',$product);
         $tags=implode(',',$product->tags()->pluck('name')->toArray()); // get tag name and turn to array then impolde to stirng
-        //dd($tags);
         return view('dashboard.products.edit',compact('product','tags'));
     }
 
@@ -91,6 +96,7 @@ class ProductsController extends Controller
      */
     public function update(Request $request, Product $product )
     {
+        $this->authorize('update',$product);
         $request->validate([
             'name'=>['required','string','max:255'],
             'status'=>['required'],
@@ -143,9 +149,13 @@ class ProductsController extends Controller
         return to_route('dashboard.products.index')->with('success','Product Updated');
     }
 
-
-
-
+    public function destroy(string $id)
+    {
+        $product=Product::findOrFail($id);
+        $this->authorize('delete',$product);
+        $product->delete();
+        return to_route('dashboard.products.index')->with('success','Products Deleted !');
+    }
     public function upload_image(Request $request)
     {
         if(!$request->hasFile('image')){
@@ -158,17 +168,6 @@ class ProductsController extends Controller
 
         return $path;
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-
-        $product=Product::findOrFail($id);
-        $product->delete();
-        return to_route('dashboard.products.index')->with('success','Products Deleted !');
-    }
     public function trash(){
         $request=request();
         $products=Product::onlyTrashed()->filter($request->query())->paginate();
@@ -176,12 +175,14 @@ class ProductsController extends Controller
     }
     public function restore(Request $request , $id){
         $product=Product::onlyTrashed()->findOrFail($id);
+        $this->authorize('restore',$product);
         $product->restore();
         return to_route('dashboard.products.trash')
             ->with('success','Category Restored!');
     }
     public function forceDelete( $id){
         $product=Product::onlyTrashed()->findOrFail($id);
+        $this->authorize('forceDelete',$product);
         $product->forceDelete();
         if ($product->image) {
             $imagePath = $product->image;

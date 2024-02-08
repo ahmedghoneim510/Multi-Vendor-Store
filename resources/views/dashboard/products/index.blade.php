@@ -8,7 +8,9 @@
 
     @section('content')
     <div class="mb-5">
+        @can('create','App\Models\Product')
         <a href="{{route('dashboard.products.create')}}" class="btn btn-sm btn-outline-primary" >Create</a>
+        @endcan
         <a href="{{route('dashboard.products.trash')}}" class="btn btn-sm btn-outline-dark" >Trash</a>
     </div>
 
@@ -58,14 +60,18 @@
                     <td>{{$product->status}}</td>
                     <td>{{$product->created_at}}</td>
                     <td>
+                        @can('update',$product)
                         <a href="{{route('dashboard.products.edit',[$product->id])}}" class="btn btn-sm btn-outline-success">Edit</a>
+                        @endcan
                     </td>
                     <td>
+                        @can('delete',$product)
                         <form method="post" action="{{route('dashboard.products.destroy',[$product->id])}}">
                             @csrf
                             @method('delete')
                             <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                         </form>
+                        @endcan
                     </td>
                 </tr>
             @empty

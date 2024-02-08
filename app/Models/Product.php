@@ -47,6 +47,7 @@ class Product extends Model
             //'id',  => pk current model
             //'id');  => pk for related model
     }
+
 //    public function scopeFilter(Builder $builder ,$filters){ // local scope
 //        if($filters['name'] ?? false){
 //            $builder->where('name','like',"%{$filters['name']}%");
@@ -84,6 +85,9 @@ class Product extends Model
         $builder->when($options['status'],function ($builder,$value){
             $builder->where('status',$value);
         });
+        if($filters['name'] ?? false){
+             $builder->where('name','like',"%{$filters['name']}%");
+        }
         $builder->when($options['store_id'],function ($builder,$value){
             $builder->where('store_id',$value);
         });

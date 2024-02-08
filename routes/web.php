@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\Auth\TwoFactorAuthenticationController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
