@@ -15,6 +15,7 @@
 
     <x-alert type="success"/>
     <x-alert type="info"/>
+
     <form action="{{\Illuminate\Support\Facades\URL::current() }} " method="get" class="d-flex justify-content-between mb-4">
         <x-form.input name="name" placeholder="Name"  class="mx-2" value="{{request('name')}}"/>
         <select name="status" class="form-control mx-1">

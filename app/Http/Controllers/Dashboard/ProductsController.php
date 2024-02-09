@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\ImportProducts;
 use App\Models\Product;
 use App\Models\Tag;
 use Illuminate\Http\Request;

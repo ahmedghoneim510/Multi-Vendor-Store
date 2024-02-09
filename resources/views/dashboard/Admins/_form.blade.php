@@ -22,7 +22,7 @@
 
     @foreach ($roles as $role)
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->id }}" @checked(in_array($role->id,$admin_roles ?? []))>
+            <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->id }}" @checked(in_array($role->id, old('roles', $admin_roles??[])))>
             <label class="form-check-label">
                 {{ $role->name }}
             </label>

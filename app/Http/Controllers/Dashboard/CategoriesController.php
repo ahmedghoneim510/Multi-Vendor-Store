@@ -47,7 +47,7 @@ class CategoriesController extends Controller
                 //this same of -> selectRow('select count(*) from products where category_id=categories.id and status='active' as product_number ')
             ])
             ->filter($request->query())
-            ->paginate(4);
+            ->paginate();
             //->orderBy('categories.name')
 
       //  $categories=$query->paginate(4); // return collection (object of class objection)
