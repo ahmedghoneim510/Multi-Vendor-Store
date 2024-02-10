@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\Auth\TwoFactorAuthenticationController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use App\Http\Controllers\Auth\SocialLoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,7 +43,7 @@ Route::group([
     Route::post('currency',[CurrencyConverter::class,'store'])->name('currency.store');
     /*------------------------------------------------------------------------------------------*/
 
-    
+
 
     /*------------------------------------------------------------------------------------------*/
 
@@ -55,7 +56,21 @@ Route::group([
 
 });
 
+//Route::get('/redirect', function () {
+//    $query = http_build_query([
+//        'client_id' => env('GOOGLE_CLIENT_ID'),
+//        'redirect_uri' => env('GOOGLE_REDIRECT_URI'),
+//        'response_type' => 'code',
+//        'scope' => '',
+//    ]);
+//
+//    return redirect('https://accounts.google.com/o/oauth2/auth?' . $query);
+//})->name('google.redirect');
 
+Route::get('auth/{provider}/redirect',[SocialLoginController::class,'redirectToProvider'])
+    ->name('auth.socialite.redirect');
+Route::get('auth/{provider}/callback',[SocialLoginController::class,'handleProviderCallback'])
+    ->name('auth.socialite.callback');
 
 
 //require __DIR__.'/auth.php';

@@ -15,6 +15,12 @@ use Intervention\Image\Image;
 
 class ProductsController extends Controller
 {
+//    public function __construct()
+//    {
+//       // dd( $this->authorizeResource(Product::class, 'product'))
+//        $this->authorizeResource(Product::class, 'product');
+//    }
+
     /**
      * Display a listing of the resource.
      */
@@ -46,7 +52,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        $this->authorize('create',Product::class);
+       // $this->authorize('create',Product::class);
         $product=new Product();
         return view('dashboard.products.create',compact('product'));
     }
@@ -56,7 +62,7 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create',Product::class);
+        //$this->authorize('create',Product::class);
         $request->validate([
             'name'=>['required','string','max:255'],
             'status'=>['required','in:active,archived,draft'],
@@ -77,7 +83,7 @@ class ProductsController extends Controller
      */
     public function show(Product $product)
     {
-        $this->authorize('view',$product);
+        //$this->authorize('view',$product);
 //        return view('dashboard.products.show',compact('product'));
     }
 
@@ -97,7 +103,7 @@ class ProductsController extends Controller
      */
     public function update(Request $request, Product $product )
     {
-        $this->authorize('update',$product);
+        //$this->authorize('update',$product);
         $request->validate([
             'name'=>['required','string','max:255'],
             'status'=>['required'],
@@ -153,7 +159,7 @@ class ProductsController extends Controller
     public function destroy(string $id)
     {
         $product=Product::findOrFail($id);
-        $this->authorize('delete',$product);
+        //$this->authorize('delete',$product);
         $product->delete();
         return to_route('dashboard.products.index')->with('success','Products Deleted !');
     }

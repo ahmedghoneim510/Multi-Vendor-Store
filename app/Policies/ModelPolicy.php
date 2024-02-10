@@ -15,12 +15,12 @@ class ModelPolicy
     {
         //
     }
-    public function before($user, $ability) // this function will run before any other gate
-    {
-        if ($user->super_admin) {
-            return true;
-        }
-    }
+//    public function before($user, $ability) // this function will run before any other gate
+//    {
+//        if ($user->super_admin) {
+//            return true;
+//        }
+//    }
     public function __call($name, $arguments) // used when the method is not found in the class
     {
         $class_name = str_replace('Policy', '', class_basename($this)); // like RolePolicy
@@ -38,7 +38,7 @@ class ModelPolicy
                 return false;
             }
         }
-
+//        dd($ability);
         return $user->hasAbility($ability);
     }
 }

@@ -8,8 +8,14 @@ use Illuminate\Auth\Access\Response;
 
 class ProductPolicy extends ModelPolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
+
+    public function update( $user, Product $product): bool
+    {
+        return $user->hasAbility('roles.update');
+    }
+        public function delete( $user, Product $product): bool
+    {
+        return $user->hasAbility('roles.delete');
+    }
 
 }

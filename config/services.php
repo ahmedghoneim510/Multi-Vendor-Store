@@ -32,6 +32,11 @@ return [
     ],
     'CURRENCY_CONVERTER'=>[
         'api_key'=>env('CURRENCY_CONVERTER_API_KEY')
-    ]
+    ],
+    'facebook' => [
+    'client_id' => env('FACEBOOK_CLIENT_ID'),
+    'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
+    'redirect' =>env('app.url').'/auth/facebook/callback',
+    ],
 
 ];
