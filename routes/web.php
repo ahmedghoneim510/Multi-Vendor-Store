@@ -8,6 +8,7 @@ use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\Auth\TwoFactorAuthenticationController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Auth\SocialLoginController;
+use App\Http\Controllers\Front\OrdersController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +19,11 @@ use App\Http\Controllers\Auth\SocialLoginController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+
+
+
+
 Route::group([
     'prefix' => LaravelLocalization::setLocale()
 ],function (){
@@ -56,21 +62,17 @@ Route::group([
 
 });
 
-//Route::get('/redirect', function () {
-//    $query = http_build_query([
-//        'client_id' => env('GOOGLE_CLIENT_ID'),
-//        'redirect_uri' => env('GOOGLE_REDIRECT_URI'),
-//        'response_type' => 'code',
-//        'scope' => '',
-//    ]);
-//
-//    return redirect('https://accounts.google.com/o/oauth2/auth?' . $query);
-//})->name('google.redirect');
+
+/*------------------------------------------------------------------------------------------*/
 
 Route::get('auth/{provider}/redirect',[SocialLoginController::class,'redirectToProvider'])
     ->name('auth.socialite.redirect');
 Route::get('auth/{provider}/callback',[SocialLoginController::class,'handleProviderCallback'])
     ->name('auth.socialite.callback');
+
+/*------------------------------------------------------------------------------------------*/
+
+Route::get('/orders/{order}',[OrdersController::class,'show'])->name('orders.show');
 
 
 //require __DIR__.'/auth.php';

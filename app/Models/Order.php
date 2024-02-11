@@ -54,4 +54,7 @@ class Order extends Model
         return $year."000001";
 
     }
+    public function delivery(){
+        return $this->hasOne(Delivery::class);
+    }
 }

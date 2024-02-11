@@ -21,6 +21,7 @@ class SocialLoginController extends Controller
     {
         try {
             $user_provider = Socialite::driver($provider)->user();
+//            dd($user_provider);
             $user=User::where([
                 'provider'=>$provider,
                 'provider_id'=>$user_provider->id,
@@ -38,7 +39,7 @@ class SocialLoginController extends Controller
             Auth::login($user,true);
             return to_route('home');
         }catch (\Exception $e){
-           return redirect()->route('login')->with('error','Something went wrong');
+           return redirect()->route('login')->with('info','Something went wrong');
         }
     }
 }
