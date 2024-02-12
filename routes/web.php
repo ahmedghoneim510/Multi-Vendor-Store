@@ -72,7 +72,8 @@ Route::get('auth/{provider}/callback',[SocialLoginController::class,'handleProvi
 
 /*------------------------------------------------------------------------------------------*/
 
-Route::get('/orders/{order}',[OrdersController::class,'show'])->name('orders.show');
+Route::get('/orders/{order}',[OrdersController::class,'show'])->name('orders.show')
+    ->middleware('auth');
 
 
 //require __DIR__.'/auth.php';

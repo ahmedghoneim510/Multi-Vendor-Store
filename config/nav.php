@@ -24,7 +24,7 @@
         ],
         [
             'icon'=>'nav-icon fas fa-tachometer-alt',
-            'route'=>'dashboard.dashboard',
+            'route'=>'dashboard.orders.index',
             'title'=>'Orders',
             'active'=>'dashboard.orders.*',
             'ability'=>'orders.view'

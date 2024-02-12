@@ -12,11 +12,20 @@ class Order extends Model
     protected $fillable=[
         'store_id','user_id','payment_method','status','payment_status',
     ];
+    protected $appends=['total_price'];
     public function store(){
         return $this->belongsTo(Store::class);
     }
     public function user(){
         return $this->belongsTo(User::class)->withDefault(['name'=>'Guest Customer']);
+    }
+    public function orderItems(){
+        return $this->hasMany(OrderItem::class);
+    }
+    public function getTotalPriceAttribute()
+    {
+        // Calculate the total price by summing up the prices of all associated items
+        return $this->orderItems()->sum('price');
     }
     public static function booted()
     {

@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\RolesController;
 use App\Http\Controllers\Dashboard\AdminsController;
 use App\Http\Controllers\Dashboard\UsersController;
 use App\Http\Controllers\Dashboard\ImportProductsController;
+use App\Http\Controllers\Dashboard\OrdersController;
 Route::group([ // we want to make this route to login with guard admin so we use auth:admin
     'middleware'=>['auth:admin,web'], // must be auth , we made a middleware to enter dash :mean we 'll pass parameter
     'as'=>'dashboard.', // to make route name like dashboard.categories.index
@@ -54,7 +55,7 @@ Route::group([ // we want to make this route to login with guard admin so we use
     Route::resource('roles',RolesController::class);
     Route::resource('/admins',AdminsController::class);
     Route::resource('/users',UsersController::class);
-
+    Route::resource('/orders',OrdersController::class);
 
     /*------------------------------------------------------------------------------------------*/
 
