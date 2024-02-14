@@ -104,7 +104,7 @@ any thing but inside it it's go to putting in solt in layout --}}
                     <div class="single-category">
                         <h3 class="heading">TV & Audios</h3>
                         <ul>
-                            <li><a href="product-grids.html">Smart Television</a></li>
+                            <li><a href="{{route('checkingOut',75)}}">Smart Television</a></li>
                             <li><a href="product-grids.html">QLED TV</a></li>
                             <li><a href="product-grids.html">Audios</a></li>
                             <li><a href="product-grids.html">Headphones</a></li>

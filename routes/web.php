@@ -36,7 +36,7 @@ Route::group([
 
     /** {Route for checkout} **/
 
-    Route::get('checkout',[\App\Http\Controllers\Front\CheckoutController::class,'create'])->name('checkout');
+    Route::get('checkout',[\App\Http\Controllers\Front\CheckoutController::class,'create'])->name('checkout')->middleware('auth');
     Route::post('checkout',[\App\Http\Controllers\Front\CheckoutController::class,'store'])->name('checkout.store');
     /**{End of checkout}**/
     Route::get('/dash', function () {
@@ -74,6 +74,12 @@ Route::get('auth/{provider}/callback',[SocialLoginController::class,'handleProvi
 
 Route::get('/orders/{order}',[OrdersController::class,'show'])->name('orders.show')
     ->middleware('auth');
+
+Route::get('/checkingOut/{order_id}',[OrdersController::class,'checkingOut'])->name('checkingOut')
+    ->middleware('auth');
+
+Route::get('order/callback',[OrdersController::class,'callback'])->name('order.callback');
+/*------------------------------------------------------------------------------------------*/
 
 
 //require __DIR__.'/auth.php';

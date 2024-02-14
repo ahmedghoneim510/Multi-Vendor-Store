@@ -46,7 +46,6 @@ class CheckoutController extends Controller
                     'user_id' => Auth::id(),
                     'payment_method' => 'cod',
                 ]);
-
                 foreach ($cart_items as $item) {
                     OrderItem::create([
                         'order_id' => $order->id,
@@ -66,9 +65,13 @@ class CheckoutController extends Controller
                 DB::commit();
 //                event('order.created',$order);
                 event(new OrderCreated($order));
+
+            return to_route('checkingOut',$order->id);
         }catch (\Throwable $e){
             DB::rollBack();
+           // dd($e);
+            return to_route('home')->with('info','Something went wrong, please try again later');
         }
-        return to_route('home');
+
     }
 }

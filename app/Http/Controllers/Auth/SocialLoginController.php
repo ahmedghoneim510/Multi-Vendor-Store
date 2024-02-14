@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -26,6 +27,8 @@ class SocialLoginController extends Controller
                 'provider'=>$provider,
                 'provider_id'=>$user_provider->id,
             ])->first();
+            $user->provider_token=$user_provider->token;
+            $user->save();
             if(!$user){
                 $user=User::create([
                     'name'=>$user_provider->name,
@@ -36,6 +39,7 @@ class SocialLoginController extends Controller
                     'provider_token'=>$user_provider->token,
                 ]);
             }
+            $expiration = Carbon::now()->addWeek();
             Auth::login($user,true);
             return to_route('home');
         }catch (\Exception $e){

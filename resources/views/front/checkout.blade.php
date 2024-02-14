@@ -120,7 +120,7 @@
                                             <div class="single-form button">
                                                 <button class="btn" data-bs-toggle="collapse"
                                                         data-bs-target="#collapseFour" aria-expanded="false"
-                                                        aria-controls="collapseFour">next
+                                                        aria-controls="collapseFour" onclick="preventFormSubmission(event)">next
                                                     step</button>
                                             </div>
                                         </div>
@@ -203,111 +203,18 @@
                                                 </div>
                                             </div>
                                         </div>
-                                       <div class="col-md-12">
-                                            <div class="checkout-payment-option">
-                                                <h6 class="heading-6 font-weight-400 payment-title">Select Delivery
-                                                    Option</h6>
-                                                <div class="payment-option-wrapper">
-                                                    <div class="single-payment-option">
-                                                        <input type="radio" name="shipping" checked id="shipping-1">
-                                                        <label for="shipping-1">
-                                                            <img src="https://via.placeholder.com/60x32"
-                                                                 alt="Sipping">
-                                                            <p>Standerd Shipping</p>
-                                                            <span class="price">$10.50</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="single-payment-option">
-                                                        <input type="radio" name="shipping" id="shipping-2">
-                                                        <label for="shipping-2">
-                                                            <img src="https://via.placeholder.com/60x32"
-                                                                 alt="Sipping">
-                                                            <p>Standerd Shipping</p>
-                                                            <span class="price">$10.50</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="single-payment-option">
-                                                        <input type="radio" name="shipping" id="shipping-3">
-                                                        <label for="shipping-3">
-                                                            <img src="https://via.placeholder.com/60x32"
-                                                                 alt="Sipping">
-                                                            <p>Standerd Shipping</p>
-                                                            <span class="price">$10.50</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="single-payment-option">
-                                                        <input type="radio" name="shipping" id="shipping-4">
-                                                        <label for="shipping-4">
-                                                            <img src="https://via.placeholder.com/60x32"
-                                                                 alt="Sipping">
-                                                            <p>Standerd Shipping</p>
-                                                            <span class="price">$10.50</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="col-md-12">
                                             <div class="steps-form-btn button">
                                                 <button class="btn" data-bs-toggle="collapse"
                                                         data-bs-target="#collapseThree" aria-expanded="false"
                                                         aria-controls="collapseThree">previous</button>
-                                                <a href="javascript:void(0)" class="btn btn-alt">Save & Continue</a>
+                                              <input type="submit"  name="submit" class="btn btn-alt" value="Save & Continue">
                                             </div>
                                         </div>
                                     </div>
                                 </section>
                             </li>
-                            <li>
-                                <h6 class="title collapsed" data-bs-toggle="collapse" data-bs-target="#collapsefive"
-                                    aria-expanded="false" aria-controls="collapsefive">Payment Info</h6>
-                                <section class="checkout-steps-form-content collapse" id="collapsefive"
-                                         aria-labelledby="headingFive" data-bs-parent="#accordionExample">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="checkout-payment-form">
-                                                <div class="single-form form-default">
-                                                    <label>Cardholder Name</label>
-                                                    <div class="form-input form">
-                                                        <input type="text" placeholder="Cardholder Name">
-                                                    </div>
-                                                </div>
-                                                <div class="single-form form-default">
-                                                    <label>Card Number</label>
-                                                    <div class="form-input form">
-                                                        <input id="credit-input" type="text"
-                                                               placeholder="0000 0000 0000 0000">
-                                                        <img src="assets/images/payment/card.png" alt="card">
-                                                    </div>
-                                                </div>
-                                                <div class="payment-card-info">
-                                                    <div class="single-form form-default mm-yy">
-                                                        <label>Expiration</label>
-                                                        <div class="expiration d-flex">
-                                                            <div class="form-input form">
-                                                                <input type="text" placeholder="MM">
-                                                            </div>
-                                                            <div class="form-input form">
-                                                                <input type="text" placeholder="YYYY">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="single-form form-default">
-                                                        <label>CVC/CVV <span><i
-                                                                    class="mdi mdi-alert-circle"></i></span></label>
-                                                        <div class="form-input form">
-                                                            <input type="text" placeholder="***">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="single-form form-default button">
-                                                    <button type="submit" class="btn">pay now</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                            </li>
+
                         </ul>
                     </div>
                     </form>
@@ -365,5 +272,42 @@
             </div>
         </div>
     </section>
+    @push('scripts')
+        <script>
+            function preventFormSubmission(event) {
+                event.preventDefault(); // Prevent the default form submission
+                // Add your code here to handle the button click
+            }
+        </script>
+        <script>
+
+                var billingAddress = document.querySelector('input[name="addr[billing][street_address]"]').value;
+                var billingCity = document.querySelector('input[name="addr[billing][city]"]').value;
+                var billingPostalCode = document.querySelector('input[name="addr[billing][postal_code]"]').value;
+                var billingState = document.querySelector('input[name="addr[billing][state]"]').value;
+                var billingCountry = document.querySelector('select[name="addr[billing][country]"]').value;
+                var billingFirstName = document.querySelector('input[name="addr[billing][first_name]"]').value;
+                var billingLastName = document.querySelector('input[name="addr[billing][last_name]"]').value;
+
+                if (document.getElementById('checkbox-3').checked) {
+                    document.querySelector('input[name="addr[shipping][street_address]"]').value = billingAddress;
+                    document.querySelector('input[name="addr[shipping][city]"]').value = billingCity;
+                    document.querySelector('input[name="addr[shipping][postal_code]"]').value = billingPostalCode;
+                    document.querySelector('input[name="addr[shipping][state]"]').value = billingState;
+                    document.querySelector('select[name="addr[shipping][country]"]').value = billingCountry;
+                    document.querySelector('input[name="addr[shipping][first_name]"]').value = billingFirstName;
+                    document.querySelector('input[name="addr[shipping][last_name]"]').value = billingLastName;
+
+                } else {
+                    document.querySelector('input[name="addr[shipping][street_address]"]').value = '';
+                    document.querySelector('input[name="addr[shipping][city]"]').value = '';
+                    document.querySelector('input[name="addr[shipping][postal_code]"]').value = '';
+                    document.querySelector('input[name="addr[shipping][state]"]').value = '';
+                    document.querySelector('select[name="addr[shipping][country]"]').value = '';
+                    document.querySelector('input[name="addr[shipping][first_name]"]').value = '';
+                    document.querySelector('input[name="addr[shipping][last_name]"]').value = '';
+                 }
+        </script>
+    @endpush
     <!--====== Checkout Form Steps Part Ends ======-->
 </x-front-layout>

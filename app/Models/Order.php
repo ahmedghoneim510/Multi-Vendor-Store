@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -25,7 +26,9 @@ class Order extends Model
     public function getTotalPriceAttribute()
     {
         // Calculate the total price by summing up the prices of all associated items
-        return $this->orderItems()->sum('price');
+        return $this->orderItems->sum(function (OrderItem $item){
+            return $item->price * $item->quantity;
+        });
     }
     public static function booted()
     {
@@ -65,5 +68,14 @@ class Order extends Model
     }
     public function delivery(){
         return $this->hasOne(Delivery::class);
+    }
+
+    public function scopeFilter(Builder $builder ,$filters){
+        if($filters['name'] ?? false){
+            $builder->where('name','like',"%{$filters['name']}%");
+        }
+        if($filters['payment_status'] ?? false){
+            $builder->where('payment_status',$filters['payment_status']);
+        }
     }
 }

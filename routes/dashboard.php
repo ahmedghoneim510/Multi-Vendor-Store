@@ -55,7 +55,7 @@ Route::group([ // we want to make this route to login with guard admin so we use
     Route::resource('roles',RolesController::class);
     Route::resource('/admins',AdminsController::class);
     Route::resource('/users',UsersController::class);
-    Route::resource('/orders',OrdersController::class);
+    Route::resource('/orders-admins',OrdersController::class);
 
     /*------------------------------------------------------------------------------------------*/
 

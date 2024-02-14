@@ -13,7 +13,8 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        $orders=Order::paginate(10);
+        $request=request();
+        $orders=Order::filter($request->query())->paginate(10);
         return view('dashboard.orders.index',compact('orders'));
 
     }
@@ -37,9 +38,10 @@ class OrdersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show( $id)
     {
-        //
+        $order=Order::with('orderItems')->find($id);
+        return view('dashboard.orders.show',compact('order'));
     }
 
     /**
