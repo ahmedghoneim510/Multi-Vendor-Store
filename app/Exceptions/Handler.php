@@ -35,11 +35,12 @@ class Handler extends ExceptionHandler
             return true;
         });
        $this->renderable(function (QueryException $e,Request $request) {
-           if ($e->getCode() == 23000) {
-               $message = 'Foreign key constraint failed';
-           } else {
-               $message = $e->getMessage();
-           }
+//           if ($e->getCode() == 23000) {
+//               $message = 'Foreign key constraint failed';
+//           } else {
+//               $message = $e->getMessage();
+//           }
+           $message = $e->getMessage();
             if($request->expectsJson()){
                 return response()->json([
                     'message'=>$message

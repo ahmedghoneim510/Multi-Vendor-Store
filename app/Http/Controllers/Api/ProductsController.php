@@ -51,11 +51,20 @@ class ProductsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        return new ProductResource($product); // using api resource to return a form of data
+        $product=Product::find($id);
+        if($product){
+            return new ProductResource($product);
+        }
+        return Response::json([
+            'code'=>0,
+            'msg'=>"Product not found",
+        ],404);
 
-        return $product->load('category:id,name','store:id,name','tags:id,name'); // not needed to use with()
+       // return new ProductResource($product); // using api resource to return a form of data
+
+      //  return $product->load('category:id,name','store:id,name','tags:id,name'); // not needed to use with()
 
     }
 

@@ -15,11 +15,6 @@ use Intervention\Image\Image;
 
 class ProductsController extends Controller
 {
-//    public function __construct()
-//    {
-//       // dd( $this->authorizeResource(Product::class, 'product'))
-//        $this->authorizeResource(Product::class, 'product');
-//    }
 
     /**
      * Display a listing of the resource.

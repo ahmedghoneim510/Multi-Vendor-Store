@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ProductsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AccessTokensControlller;
+use App\Http\Controllers\Api\CategoriesController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,6 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //Route::resourceAp('/product',[ProductsController::class,'index']);
 //Route::apiResource('products',ProductsController::class);
 Route::apiResource('products', ProductsController::class);
+Route::apiResource('categories', CategoriesController::class);
+
 
 Route::post('auth/access-tokens',[AccessTokensControlller::class,'store'])
     ->middleware('guest:sanctum'); // he isn't auth from guard sanctum

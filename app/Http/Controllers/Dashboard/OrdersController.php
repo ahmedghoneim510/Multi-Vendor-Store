@@ -47,9 +47,10 @@ class OrdersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $order=Order::find($id);
+        return view('dashboard.orders.edit',compact('order'));
     }
 
     /**
@@ -57,7 +58,12 @@ class OrdersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'status'=>'required|in:pending,processing,completed,cancelled,refunded,delivered',
+        ]);
+        $order=Order::find($id);
+        $order->update($request->all());
+        return to_route('dashboard.orders-admins.index')->with('success','Order updated successfully');
     }
 
     /**
@@ -65,6 +71,8 @@ class OrdersController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $order=Order::find($id);
+        $order->delete();
+        return to_route('dashboard.orders-admins.index')->with('success','Order deleted successfully');
     }
 }

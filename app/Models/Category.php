@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class Category extends Model
@@ -16,6 +17,12 @@ class Category extends Model
         'name','parent_id','description','slug','image','status'
     ];
 
+    protected static function booted()
+    {
+        static::creating(function(Category $category){ // while creating(inserting) make uuid and insert it
+            $category->slug=Str::slug($category->name);
+        });
+    }
     public function products(){
         return $this->hasMany(Product::class,'category_id','id');
     }
@@ -28,6 +35,17 @@ class Category extends Model
     }
     public function children(){
         return $this->hasMany(Category::class,'parent_id','id');
+    }
+    public function getImageUrlAttribute(){ // when we use it product->image_url
+        if(!$this->image){
+            return 'https://smithcodistributing.com/wp-content/themes/hello-elementor/assets/default_product.png';
+        }
+        if(str::startsWith($this->image,['https://','http://']))
+        {
+            return $this->image;
+        }
+        return asset('storage/'.$this->image);
+
     }
 
 

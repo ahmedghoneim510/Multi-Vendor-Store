@@ -27,12 +27,10 @@ class OrdersController extends Controller
             $all_sum=$orders->sum(function ($order){
                 return (float) $order->total_price;
             });
-            //dd($all_sum);
             $all_sum*=100;
             $all_sum=intval($all_sum);
             $integration_id=env('PAYMOB_CARD_INTEGRATION_ID');
             $iframe_id_or_wallet_number=env('PAYMOB_CARD_IFRAME_ID');
-
 
             // step 1: login to paymob
             $response = Http::withHeaders([
@@ -42,9 +40,7 @@ class OrdersController extends Controller
             ]);
             $json=$response->json();
 
-
             // step 2: send order data
-
             $response_final=Http::withHeaders([
                 'content-type' => 'application/json'
             ])->post('https://accept.paymobsolutions.com/api/ecommerce/orders',[
@@ -56,7 +52,6 @@ class OrdersController extends Controller
             ]);
             $json_final=$response_final->json();
 
-           // dd($json_final);
 
             // step 3: send payment key
             $response_final_final=Http::withHeaders([
@@ -89,8 +84,8 @@ class OrdersController extends Controller
 
             return redirect('https://accept.paymobsolutions.com/api/acceptance/iframes/'. $iframe_id_or_wallet_number .'?payment_token=' . $response_final_final_json['token']);
         }catch (\Exception $e){
-            dd($e->getMessage());
-            //return to_route('home')->with('info','Something went wrong in order processing');
+            //dd($e->getMessage());
+            return to_route('home')->with('info','Something went wrong in order processing');
         }
     }
 
@@ -98,7 +93,6 @@ class OrdersController extends Controller
     {
         $order_id= $request->merchant_order_id;
         $order = Order::where('id',$order_id)->first();
-//        dd($order);
         $user=User::where('id',$order->user_id)->first();
         Auth::login($user,true);
         $payment_details = json_encode($request->all());
