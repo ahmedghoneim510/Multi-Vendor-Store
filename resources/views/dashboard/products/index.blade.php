@@ -21,8 +21,8 @@
         <select name="status" class="form-control mx-1">
             <option value="">All</option>
             <option value="active" @selected(request('status')=='active')>Active</option>
-            <option value="inactive" @selected(request('status')=='inactive')>draft</option>
-            <option value="draft" @selected(request('status')=='draft')>Archived</option>
+            <option value="inactive" @selected(request('status')=='inactive')>Archived</option>
+            <option value="draft" @selected(request('status')=='draft')>draft</option>
         </select>
         <button class="btn btn-dark">Filter</button>
     </form>

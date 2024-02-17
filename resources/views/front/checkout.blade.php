@@ -307,6 +307,26 @@
                     document.querySelector('input[name="addr[shipping][first_name]"]').value = '';
                     document.querySelector('input[name="addr[shipping][last_name]"]').value = '';
                  }
+                document.getElementById('checkbox-3').addEventListener('change', function () {
+                    if (this.checked) {
+                        document.querySelector('input[name="addr[shipping][street_address]"]').value = billingAddress;
+                        document.querySelector('input[name="addr[shipping][city]"]').value = billingCity;
+                        document.querySelector('input[name="addr[shipping][postal_code]"]').value = billingPostalCode;
+                        document.querySelector('input[name="addr[shipping][state]"]').value = billingState;
+                        document.querySelector('select[name="addr[shipping][country]"]').value = billingCountry;
+                        document.querySelector('input[name="addr[shipping][first_name]"]').value = billingFirstName;
+                        document.querySelector('input[name="addr[shipping][last_name]"]').value = billingLastName;
+
+                    } else {
+                        document.querySelector('input[name="addr[shipping][street_address]"]').value = '';
+                        document.querySelector('input[name="addr[shipping][city]"]').value = '';
+                        document.querySelector('input[name="addr[shipping][postal_code]"]').value = '';
+                        document.querySelector('input[name="addr[shipping][state]"]').value = '';
+                        document.querySelector('select[name="addr[shipping][country]"]').value = '';
+                        document.querySelector('input[name="addr[shipping][first_name]"]').value = '';
+                        document.querySelector('input[name="addr[shipping][last_name]"]').value = '';
+                    }
+                });
         </script>
     @endpush
     <!--====== Checkout Form Steps Part Ends ======-->
